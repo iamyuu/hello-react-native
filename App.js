@@ -4,8 +4,9 @@ import styled from 'styled-components/native';
 import { NotificationIcon } from './components/icon';
 import Logo from './components/logo';
 import Card from './components/card';
+import Course from './components/course';
 
-const logoItems = [
+const logos = [
   {
     image: require('./assets/logo-framerx.png'),
     text: 'Framer X'
@@ -32,34 +33,73 @@ const logoItems = [
   }
 ];
 
-const cardItems = [
+const cards = [
   {
     title: 'React Native for Designers',
     image: require('./assets/background11.jpg'),
-    subtitle: 'React Native',
+    subTitle: 'React Native',
     caption: '1 of 12 sections',
     logo: require('./assets/logo-react.png')
   },
   {
     title: 'Styled Components',
     image: require('./assets/background12.jpg'),
-    subtitle: 'React Native',
+    subTitle: 'React Native',
     caption: '2 of 12 sections',
     logo: require('./assets/logo-react.png')
   },
   {
     title: 'Props and Icons',
     image: require('./assets/background13.jpg'),
-    subtitle: 'React Native',
+    subTitle: 'React Native',
     caption: '3 of 12 sections',
     logo: require('./assets/logo-react.png')
   },
   {
     title: 'Static Data and Loop',
     image: require('./assets/background14.jpg'),
-    subtitle: 'React Native',
+    subTitle: 'React Native',
     caption: '4 of 12 sections',
     logo: require('./assets/logo-react.png')
+  }
+];
+
+const courses = [
+  {
+    title: 'Prototype in InVision Studio',
+    subtitle: '10 sections',
+    image: require('./assets/background13.jpg'),
+    logo: require('./assets/logo-studio.png'),
+    author: 'Meng To',
+    avatar: require('./assets/avatar.jpg'),
+    caption: 'Design and interactive prototype'
+  },
+  {
+    title: 'React for Designers',
+    subtitle: '12 sections',
+    image: require('./assets/background11.jpg'),
+    logo: require('./assets/logo-react.png'),
+    author: 'Meng To',
+    avatar: require('./assets/avatar.jpg'),
+    caption: 'Learn to design and code a React site'
+  },
+  {
+    title: 'Design and Code with Framer X',
+    subtitle: '10 sections',
+    image: require('./assets/background14.jpg'),
+    logo: require('./assets/logo-framerx.png'),
+    author: 'Meng To',
+    avatar: require('./assets/avatar.jpg'),
+    caption: 'Create powerful design and code components for your app'
+  },
+  {
+    title: 'Design System in Figma',
+    subtitle: '10 sections',
+    image: require('./assets/background6.jpg'),
+    logo: require('./assets/logo-figma.png'),
+    author: 'Meng To',
+    avatar: require('./assets/avatar.jpg'),
+    caption: 'Complete guide to designing a site using a collaborative design tool'
   }
 ];
 
@@ -80,17 +120,22 @@ export default function App() {
             showsHorizontalScrollIndicator={false}
             style={{ flexDirection: 'row', padding: 20, paddingLeft: 12, paddingTop: 30 }}
           >
-            {logoItems.map((logoItem, index) => (
-              <Logo key={index} {...logoItem} />
+            {logos.map((logo, index) => (
+              <Logo key={index} {...logo} />
             ))}
           </ScrollView>
 
           <Subtitle>Continue Learning</Subtitle>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {cardItems.map((cardItem, index) => (
-              <Card key={index} {...cardItem} />
+            {cards.map((card, index) => (
+              <Card key={index} {...card} />
             ))}
           </ScrollView>
+
+          <Subtitle>Popular Courses</Subtitle>
+          {courses.map((course, index) => (
+            <Course key={index} {...course} />
+          ))}
         </ScrollView>
       </SafeAreaView>
     </Container>
