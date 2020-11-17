@@ -1,23 +1,65 @@
 import React from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
-import Card from './components/card';
 import { NotificationIcon } from './components/icon';
+import Logo from './components/logo';
+import Card from './components/card';
+
+const logoItems = [
+  {
+    image: require('./assets/logo-framerx.png'),
+    text: 'Framer X'
+  },
+  {
+    image: require('./assets/logo-figma.png'),
+    text: 'Figma'
+  },
+  {
+    image: require('./assets/logo-studio.png'),
+    text: 'Studio'
+  },
+  {
+    image: require('./assets/logo-react.png'),
+    text: 'React'
+  },
+  {
+    image: require('./assets/logo-swift.png'),
+    text: 'Swift'
+  },
+  {
+    image: require('./assets/logo-sketch.png'),
+    text: 'Sketch'
+  }
+];
 
 const cardItems = [
   {
-    title: 'Styled Components',
-    caption: 'React Native',
-    subTitle: '5 of 12 sections',
-    logo: require('./assets/logo-react.png'),
-    background: require('./assets/background2.jpg')
+    title: 'React Native for Designers',
+    image: require('./assets/background11.jpg'),
+    subtitle: 'React Native',
+    caption: '1 of 12 sections',
+    logo: require('./assets/logo-react.png')
   },
   {
-    title: 'Styled Components 2',
-    caption: 'React Native',
-    subTitle: '5 of 12 sections',
-    logo: require('./assets/logo-react.png'),
-    background: require('./assets/background1.jpg')
+    title: 'Styled Components',
+    image: require('./assets/background12.jpg'),
+    subtitle: 'React Native',
+    caption: '2 of 12 sections',
+    logo: require('./assets/logo-react.png')
+  },
+  {
+    title: 'Props and Icons',
+    image: require('./assets/background13.jpg'),
+    subtitle: 'React Native',
+    caption: '3 of 12 sections',
+    logo: require('./assets/logo-react.png')
+  },
+  {
+    title: 'Static Data and Loop',
+    image: require('./assets/background14.jpg'),
+    subtitle: 'React Native',
+    caption: '4 of 12 sections',
+    logo: require('./assets/logo-react.png')
   }
 ];
 
@@ -32,6 +74,16 @@ export default function App() {
             <Name>iamyuu</Name>
             <NotificationIcon style={{ position: 'absolute', right: 20, top: 0 }} />
           </TitleBar>
+
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={{ flexDirection: 'row', padding: 20, paddingLeft: 12, paddingTop: 30 }}
+          >
+            {logoItems.map((logoItem, index) => (
+              <Logo key={index} {...logoItem} />
+            ))}
+          </ScrollView>
 
           <Subtitle>Continue Learning</Subtitle>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -52,7 +104,7 @@ const Container = styled.View`
 
 const TitleBar = styled.View`
   width: 100%;
-  margin-top: 50px;
+  margin-top: 25px;
   padding-left: 80px;
 `;
 
@@ -84,6 +136,6 @@ const Subtitle = styled.Text`
   font-weight: 600;
   font-size: 15px;
   margin-left: 20px;
-  margin-top: 50px;
+  margin-top: 20px;
   text-transform: uppercase;
 `;

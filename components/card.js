@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-export default function Card({ title, caption, subTitle, logo, background }) {
+export default function Card({ title, caption, subTitle, logo, image }) {
   return (
     <Container>
       <Cover>
-        <Image source={background} />
+        <Image source={image} />
         <Title>{title}</Title>
       </Cover>
       <Content>
