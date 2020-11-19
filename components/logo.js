@@ -27,7 +27,7 @@ const Image = styled.Image`
 `;
 
 const Text = styled.Text`
-  font-size: 17;
+  font-size: 17px;
   font-weight: 600;
   margin-left: 8px;
 `;

@@ -2,6 +2,7 @@ import React from 'react';
 import { SafeAreaView, ScrollView } from 'react-native';
 import styled from 'styled-components/native';
 import { NotificationIcon } from './components/icon';
+import Menu from './components/menu';
 import Logo from './components/logo';
 import Card from './components/card';
 import Course from './components/course';
@@ -106,6 +107,7 @@ const courses = [
 export default function App() {
   return (
     <Container>
+      <Menu />
       <SafeAreaView>
         <ScrollView>
           <TitleBar>
