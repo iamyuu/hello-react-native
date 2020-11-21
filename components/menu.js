@@ -1,8 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components/native';
 import { Animated, Dimensions, TouchableOpacity } from 'react-native';
 import Icon from '@expo/vector-icons/Ionicons';
 import MenuItem from './menu-item';
+
+function mapStateToProps(state) {
+  return { action: state.action };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    closeMenu: () => dispatch({ type: 'CLOSE_MENU' })
+  };
+}
 
 const { height: screenHeight } = Dimensions.get('window');
 const top = new Animated.Value(screenHeight);
@@ -29,25 +40,26 @@ const items = [
   }
 ];
 
-export default function Menu() {
+function Menu(props) {
+  const toggleMenu = React.useCallback(() => {
+    if (props.action === 'openMenu') {
+      Animated.spring(top, {
+        toValue: 54,
+        useNativeDriver: false
+      }).start();
+    }
+
+    if (props.action === 'closeMenu') {
+      Animated.spring(top, {
+        toValue: screenHeight,
+        useNativeDriver: false
+      }).start();
+    }
+  }, [props.action]);
+
   React.useEffect(() => {
-    const springAnimated = Animated.spring(top, {
-      toValue: 0,
-      useNativeDriver: false
-    });
-    springAnimated.start();
-
-    return () => {
-      springAnimated.stop();
-    };
-  }, []);
-
-  const toggleMenu = () => {
-    Animated.spring(top, {
-      toValue: screenHeight,
-      useNativeDriver: false
-    }).start();
-  };
+    toggleMenu();
+  }, [toggleMenu]);
 
   return (
     <AnimatedContainer style={{ top }}>
@@ -57,7 +69,7 @@ export default function Menu() {
         <Subtitle>Software Engineer</Subtitle>
       </Cover>
 
-      <CloseViewTouchable onPress={toggleMenu}>
+      <CloseViewTouchable onPress={props.closeMenu}>
         <CloseView>
           <Icon name='ios-close' size={44} color='#546bfb' />
         </CloseView>
@@ -78,6 +90,8 @@ const Container = styled.View`
   width: 100%;
   height: 100%;
   z-index: 100;
+  border-radius: 10px;
+  overflow: hidden;
 `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
@@ -128,4 +142,7 @@ const Subtitle = styled.Text`
 const Content = styled.View`
   height: ${screenHeight}px;
   background: #f0f3f5;
+  padding: 50px;
 `;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
