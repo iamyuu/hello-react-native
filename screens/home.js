@@ -108,7 +108,7 @@ const courses = [
 const scale = new Animated.Value(1);
 const opacity = new Animated.Value(1);
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
 
@@ -183,7 +183,9 @@ export default function HomeScreen() {
             <Subtitle>Continue Learning</Subtitle>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               {cards.map((card, index) => (
-                <Card key={index} {...card} />
+                <TouchableOpacity key={index} onPress={() => navigation.push('Section')}>
+                  <Card {...card} />
+                </TouchableOpacity>
               ))}
             </ScrollView>
 
@@ -206,7 +208,8 @@ const RootView = styled.View`
 const Container = styled.View`
   background: #f0f3f5;
   flex: 1;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
