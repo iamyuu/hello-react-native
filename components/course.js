@@ -1,9 +1,40 @@
 import React from 'react';
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 
+const { width } = Dimensions.get('window');
+
+function getCourseWidth(screenWidth) {
+  let cardWidth = screenWidth - 40;
+
+  if (screenWidth >= 768) {
+    cardWidth = (screenWidth - 60) / 2;
+  }
+
+  if (screenWidth >= 1024) {
+    cardWidth = (screenWidth - 80) / 3;
+  }
+
+  return cardWidth;
+}
+
 export default function Course({ image, logo, subtitle, title, avatar, caption, author }) {
+  const [containerWidth, setCntainerWidth] = React.useState(() => getCourseWidth(width));
+
+  React.useEffect(() => {
+    function adaptLayout(dimensions) {
+      setCntainerWidth(getCourseWidth(dimensions.window.width));
+    }
+
+    Dimensions.addEventListener('change', adaptLayout);
+
+    return () => {
+      Dimensions.removeEventListener('change', adaptLayout);
+    };
+  }, []);
+
   return (
-    <Container>
+    <Container width={`${containerWidth}px`}>
       <Cover>
         <Image source={image} />
         <Logo source={logo} resizeMode='contain' />
@@ -20,12 +51,12 @@ export default function Course({ image, logo, subtitle, title, avatar, caption, 
 }
 
 const Container = styled.View`
-  width: 95%;
+  width: ${props => props.width};
   height: 335px;
   border-radius: 14px;
   background: white;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-  margin: 15px auto;
+  margin: 10px;
 `;
 
 const Cover = styled.View`

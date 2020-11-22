@@ -188,9 +188,11 @@ export default function HomeScreen({ navigation }) {
             </ScrollView>
 
             <Subtitle>POPULAR COURSES</Subtitle>
-            {courses.map((course, index) => (
-              <Course key={index} {...course} />
-            ))}
+            <CourseContainer>
+              {courses.map((course, index) => (
+                <Course key={index} {...course} />
+              ))}
+            </CourseContainer>
           </ScrollView>
         </SafeAreaView>
       </AnimatedContainer>
@@ -261,5 +263,11 @@ const Message = styled.Text`
 
 const CardsContainer = styled.View`
   flex-direction: row;
+  padding-left: 10px;
+`;
+
+const CourseContainer = styled.View`
+  flex-direction: row;
+  flex-wrap: wrap;
   padding-left: 10px;
 `;

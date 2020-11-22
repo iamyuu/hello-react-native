@@ -15,7 +15,8 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const { height: screenHeight } = Dimensions.get('window');
+const { height: screenHeight, width: screenWidth } = Dimensions.get('window');
+const cardWidth = screenWidth > 500 ? 500 : screenWidth;
 const top = new Animated.Value(screenHeight);
 const items = [
   {
@@ -87,8 +88,9 @@ function Menu(props) {
 const Container = styled.View`
   position: absolute;
   background: white;
-  width: 100%;
+  width: ${cardWidth}px;
   height: 100%;
+  align-self: center;
   z-index: 100;
   border-radius: 10px;
   overflow: hidden;

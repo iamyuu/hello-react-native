@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-export default function Card({ title, caption, subTitle, logo, image }) {
+export default function Card({ title, caption, subtitle, logo, image }) {
   return (
-    <Container>
+    <Container style={{ elevation: 10 }}>
       <Cover>
         <Image source={image} />
         <Title>{title}</Title>
@@ -12,7 +12,7 @@ export default function Card({ title, caption, subTitle, logo, image }) {
         <Logo source={logo} />
         <Wrapper>
           <Caption>{caption}</Caption>
-          <Subtitle>{subTitle}</Subtitle>
+          <Subtitle>{subtitle.toUpperCase()}</Subtitle>
         </Wrapper>
       </Content>
     </Container>
@@ -79,6 +79,5 @@ const Subtitle = styled.Text`
   color: #b8bece;
   font-size: 15px;
   font-weight: 600;
-  text-transform: uppercase;
   margin-top: 4px;
 `;
