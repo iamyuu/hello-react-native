@@ -1,4 +1,6 @@
 import React from 'react';
+import gql from 'graphql-tag';
+import { useQuery } from '@apollo/client';
 import { useSelector, useDispatch } from 'react-redux';
 import { Animated, Easing, SafeAreaView, ScrollView, StatusBar, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
@@ -32,37 +34,6 @@ const logos = [
   {
     image: require('../assets/logo-sketch.png'),
     text: 'Sketch'
-  }
-];
-
-const cards = [
-  {
-    title: 'React Native for Designers',
-    image: require('../assets/background11.jpg'),
-    subTitle: 'React Native',
-    caption: '1 of 12 sections',
-    logo: require('../assets/logo-react.png')
-  },
-  {
-    title: 'Styled Components',
-    image: require('../assets/background12.jpg'),
-    subTitle: 'React Native',
-    caption: '2 of 12 sections',
-    logo: require('../assets/logo-react.png')
-  },
-  {
-    title: 'Props and Icons',
-    image: require('../assets/background13.jpg'),
-    subTitle: 'React Native',
-    caption: '3 of 12 sections',
-    logo: require('../assets/logo-react.png')
-  },
-  {
-    title: 'Static Data and Loop',
-    image: require('../assets/background14.jpg'),
-    subTitle: 'React Native',
-    caption: '4 of 12 sections',
-    logo: require('../assets/logo-react.png')
   }
 ];
 
@@ -105,12 +76,33 @@ const courses = [
   }
 ];
 
+const CARDS_QUERY = gql`
+  {
+    cardsCollection(order: caption_ASC) {
+      items {
+        title
+        subtitle
+        subtitle
+        caption
+        content
+        logo {
+          url
+        }
+        image {
+          url
+        }
+      }
+    }
+  }
+`;
+
 const scale = new Animated.Value(1);
 const opacity = new Animated.Value(1);
 
 export default function HomeScreen({ navigation }) {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
+  const { loading: loadingCard, data: cards } = useQuery(CARDS_QUERY);
 
   const toggleMenu = React.useCallback(() => {
     if (state.action === 'openMenu') {
@@ -180,16 +172,22 @@ export default function HomeScreen({ navigation }) {
               ))}
             </ScrollView>
 
-            <Subtitle>Continue Learning</Subtitle>
+            <Subtitle>CONTINUE LEARNING</Subtitle>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {cards.map((card, index) => (
-                <TouchableOpacity key={index} onPress={() => navigation.push('Section')}>
-                  <Card {...card} />
-                </TouchableOpacity>
-              ))}
+              {loadingCard ? (
+                <Message>Loading...</Message>
+              ) : (
+                <CardsContainer>
+                  {cards.cardsCollection.items.map((card, index) => (
+                    <TouchableOpacity key={index} onPress={() => navigation.push('Section', { item: card })}>
+                      <Card {...card} />
+                    </TouchableOpacity>
+                  ))}
+                </CardsContainer>
+              )}
             </ScrollView>
 
-            <Subtitle>Popular Courses</Subtitle>
+            <Subtitle>POPULAR COURSES</Subtitle>
             {courses.map((course, index) => (
               <Course key={index} {...course} />
             ))}
@@ -252,5 +250,16 @@ const Subtitle = styled.Text`
   font-size: 15px;
   margin-left: 20px;
   margin-top: 20px;
-  text-transform: uppercase;
+`;
+
+const Message = styled.Text`
+  margin: 20px;
+  color: #b8bece;
+  font-size: 15px;
+  font-weight: 500;
+`;
+
+const CardsContainer = styled.View`
+  flex-direction: row;
+  padding-left: 10px;
 `;
